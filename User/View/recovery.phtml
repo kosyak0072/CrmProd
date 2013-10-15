@@ -1,0 +1,37 @@
+<?php echo $this->error?>
+<div id="wrap">
+	<!-- Password Restore Block -->
+	<div class="restore" style="display: block;">
+		<div id="recOpen"<?php if( isset($this->recSuccess) ):?> style="display: none;"<?php endif;?>>
+		<form method="post" action="">
+			<span class="modal-header">Восстановление пароля</span>
+			<label>Введите E-mail</label>
+			<br>
+			<input type="text" name="recEmail" placeholder="Введите свой email для восстановления пароля">
+			<br>
+			<label>login</label>
+			<br>
+			<input type="text" name="recLogin" placeholder="введите логин">
+			<br>
+			<label>Телефон</label>
+			<br>
+			<input type="text" name="recPhone" class="captcha" placeholder="Введите телефон">
+			<div class="clear"></div>
+			<input onclick="" type="button" value="Отмена" id="cancel" >
+
+			<input name="recovery" type="submit" value="Восстановить">
+			<div class="clear"></div>
+		</form>
+		</div>
+		<div id="recSubmit">
+		<form method="post">
+			<?php if( isset($this->recSuccess) ):?>
+			<p id="success" class="success msg"><?php echo $this->recSuccess?></p>
+			<label>Введите новый пароль для входа в систему </label>
+			<br>
+			<input type="text" name="recNewPass" class="captcha" placeholder="Введите новый пароль для входа в систему">
+			<?php endif;?>
+		</div>
+		</form>
+	</div>
+</div>

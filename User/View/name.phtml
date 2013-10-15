@@ -1,0 +1,21 @@
+<?php if ( !isset($_SESSION['user']) ){?>
+	<div id="wrap">
+
+		<form action="<?php echo $this->url("/User/Index/name")?>" method="post">
+			<div class="auth">
+				<a href="#" class="logo">Dipsverka</a>
+				<label>Логин</label><br>
+				<input name =login type="text" placeholder="Введите логин"><br>
+				<label>Пароль</label><br>
+				<input name="pass" type="password" placeholder="Введите пароль">
+				<div class="clear"></div>
+				<input type="checkbox" id="remember">
+				<label for="remember">Запомнить</label>
+				<input name="but" type="submit" value="Вход">
+				<div class="clear"></div>
+				<span><a href="<?php echo $this->url("/User/Index/recovery")?>" class="forgot dashed">Забыли пароль?</a></span>
+			</div>
+		</form>
+	</div>
+<?php }else
+	header("Location: /User/Index/main"); ?>

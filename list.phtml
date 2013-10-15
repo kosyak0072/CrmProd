@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ru">
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+	<title>Панель Администратора - Вход</title>
+
+	<!-- CSS Including -->
+	<?php if($this->_strTemplateFileName !="reg" && $this->_strNameSpace == "User"):?>
+	<link rel="stylesheet" href="<?php echo CSS_DIR?>blitzer/jqueryui.css">
+	<link type="text/css" rel="stylesheet" type="text/css" href="<?php echo CSS_DIR?>jCleverTemplate/alice/css/jClever.css">
+	<?php endif;?>
+	<link type="text/css" href="<?php echo CSS_DIR?>jCleverTemplate/alice/css/jquery.jscrollpane.css" rel="stylesheet" media="all">
+	<link rel="stylesheet" href="<?php echo CSS_DIR?>style.css">
+	<link rel="icon" href="<?php echo IMG_DIR?>favicon.png" type="image/png">
+	<link rel="shortcut icon" href="<?php echo IMG_DIR?>favicon.png" type="image/png">
+	<link type="text/css" href="<?php echo CSS_DIR?>multi-select.css" rel="stylesheet" media="all">
+
+	<!-- JS Including -->
+	<script src="<?php echo JS_DIR?>jquery.min.js" type="text/javascript"></script>
+	<script src="<?php echo JS_DIR?>jqueryui.js"></script>
+	<?php if($this->_strTemplateFileName != "reg"):?>
+	<script src="<?php echo JS_DIR?>jClever/build/jClever.min.js" type="text/javascript"></script>
+	<script src="<?php echo JS_DIR?>jClever/src/jquery.jscrollpane.min.js" type="text/javascript"></script>
+	<script src="<?php echo JS_DIR?>jClever/src/jquery.mousewheel.js" type="text/javascript"></script>
+	<?php endif;?>
+	<script src="<?php echo JS_DIR?>mainjs.js" type="text/javascript"></script>
+	<script src="<?php echo JS_DIR?>jquery.multi-select.js" type="text/javascript"></script>
+	<script src="<?php echo JS_DIR?>mainjs.js" type="text/javascript"></script>
+
+<?php header('Content-type: text/html; charset=utf-8');?>
+</head>
+<body>
+	<?php require_once ($this->strTemplateFilePath);?>
+</body>
+</html>
