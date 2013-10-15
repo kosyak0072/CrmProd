@@ -1,0 +1,114 @@
+
+<div id="wrap" class="reg">
+<?php if( !isset($this->reg) ){?>
+		<form  method="post" class="jClever">
+			<h1 class="header">Регистрация нового автора</h1>
+			<div class="wrap">
+				<?php if( !empty($this->error) ):?>
+					<p class="errormsg"><?php echo $this->error;?></p>
+				<?php endif;?>
+				<div class="reg-user">
+					<h2 class="header">Обязательные поля</h2>
+					<label>ФИО<sup>*</sup></label><br>
+					<input name="fio" type="text" placeholder="Фамилия, имя, отчество"><br>
+					<label>Логин<sup>*</sup></label><br>
+					<input name="login" type="text" placeholder="Введите желаемый логин"><br>
+					<label>Пароль<sup>*</sup></label><br>
+					<input name="pass" type="password" placeholder="Введите пароль к аккаунту"><br>
+					<label>Повторите пароль<sup>*</sup></label><br>
+					<input name="pass1" type="password" placeholder="Повторите введенный пароль"><br>
+					<label>Email<sup>*</sup></label><br>
+					<input name="email" type="text" placeholder="Введите ваш email"><br>
+					<label>Номер мобильного<sup>*</sup></label><br>
+					<input name="mobilePhone"type="text" placeholder="+380951234567 - формат номера"><br>
+				</div>
+				<div class="reg-user">
+					<h2 class="header">Дополнительные данные</h2>
+					<label>Городской телефон</label><br>
+					<input name="phone" type="text" placeholder="Введите ваш городской номер"><br>
+					<label>Страница в интернете</label><br>
+					<input name="web" type="text" placeholder="Ваша страница в VK, Facebook, ваш сайт..."><br>
+					<label>ICQ</label><br>
+					<input name="ICQ" type="text" placeholder="Введите ваш номер ICQ"><br>
+					<label>Skype</label><br>
+					<input name="skype" type="text" placeholder="Введите ваш логин Skype"><br>
+					<label>Ваш адрес</label><br>
+					<textarea name="adress" placeholder="Введите ваш адрес проживания"></textarea>
+				</div><br>
+				<div class="reg-user extended">
+					<h2 class="header">Выберите вашу специализацию</h2>
+					<p><strong>Подсказка:</strong> Вы можете выбрать несколько специализаций просто выбрав их из левого списка. Чтобы удалить лишнюю специализацию нажмите на нее в правом списке.</p>
+					<select name="spec[]" multiple="multiple" id="spec">
+						<option value="app|Автоматизация производственных процессов (АПП)">Автоматизация производственных процессов (АПП)</option>
+						<option value="Anatomiya|Анатомия">Анатомия</option>
+						<option value="AngliyskiyYazik|Английский язык">Английский язык</option>
+						<option value="AntikrizisnoeUpravlenie|Антикризисное управление">Антикризисное управление</option>
+						<option value="Arhitektura|Архитектура">Архитектура</option>
+						<option value="Astronomiya|Астрономия">Астрономия</option>
+						<option value="AuditBuhgalterskiyIUpravlencheskiyUchet|Аудит бухгалтерский и управленческий учет">Аудит бухгалтерский и управленческий учет</option>
+						<option value="AHD|Анализ хозяйственной деятельности">Анализ хозяйственной деятельности</option>
+						<option value="BankovskiyIInvesticionniyMenedzhment|Банковский инвестиционный менеджмент">Банковский инвестиционный менеджмент</option>
+						<option value="BankovskoeDelo|Банковское дело">Банковское дело</option>
+						<option value="BZHD|Безопасность жизнедеятельности">Безопасность жизнедеятельности</option>
+						<option value="BiznessPlanirovanie|Бизнес планирование">Бизнес планирование</option>
+						<option value="Biologiya|Биология">Биология</option>
+						<option value="BuhuchetStatistika|Бухучет, статистика">Бухучет, статистика</option>
+						<option value="VSTI|Взаимозаменяемость, Стандартизация, Технические измерения">Взаимозаменяемость, Стандартизация, Технические измерения</option>
+						<option value="VED|Внешняя эконом деятельность">Внешняя эконом деятельность</option>
+						<option value="Geografiya|География">География</option>
+						<option value="Geodeziya|Геодезия">Геодезия</option>
+						<option value="Geopolitika|Геополитика">Геополитика</option>
+						<option value="GostinichnoeDelo|Гостиничное дело">Гостиничное дело</option>
+						<option value="GrazhdanskoePravo|Граждансое право">Граждансое право</option>
+						<option value="Deloproizvodstvo|Делопроизводство">Делопроизводство</option>
+						<option value="DengiKreditBanki|Деньги, кредит, банки">Деньги, кредит, банки</option>
+						<option value="DetaliMashin|Детали машин">Детали машин</option>
+						<option value="Dizain|Дизайн">Дизайн</option>
+						<option value="DoshkolnayaPedagogika|Дошкольная педагогика">Дошкольная педагогика</option>
+						<option value="ZhilishnoePravo|Жилищное право">Жилищное право</option>
+						<option value="Zhurnalistika|Журналистика">Журналистика</option>
+						<option value="ZemelnoePravo|Земельное право">Земельное право</option>
+						<option value="InvesticionniyMenedzhment|Инвестиционный менеджмент">Инвестиционный менеджмент</option>
+						<option value="Investicii|Инвестиции">Инвестиции</option>
+						<option value="InzhenernayaGrafika|Инженерная графика">Инженерная графика</option>
+						<option value="InostrannieYaziki|Иностранные языки">Иностранные языки</option>
+						<option value="InformatikaIProgrammirovanie|Информатика и программирование">Информатика и Программирование</option>
+						<option value="Istoriya|История">История</option>
+						<option value="KommercheskayaDeyatelnost|Коммерческая деятельность">Коммерческая деятельность</option>
+						<option value="Konfliktologiya|Конфликтология">Конфликтология</option>
+						<option value="Kriminalistika|Криминалистика">Криминалистика</option>
+						<option value="Kulinariya|Кулинария">Кулинария</option>
+						<option value="KulturaIIskusstvo|Культура и искуство">Культура и искуство</option>
+						<option value="Kulturologiya|Культурология">Культурология</option>
+						<option value="Lingvistika|Лингвистика">Лингвистика</option>
+						<option value="Literatura|Литература">Литература</option>
+						<option value="Logika|Логика">Логика</option>
+						<option value="Logistika|Логистика">Логистика</option>
+						<option value="Logopediya|Логопедия">Логопедия</option>
+						<option value="Makroekonomika|Макроэкономика">Макроэкономика</option>
+						<option value="Marketing|Маркетинг">Маркетинг</option>
+						<option value="Matematika|Математика">Математика</option>
+						<option value="Medicina|Медицина">Медицина</option>
+						<option value="MezhdunarodnieOtnosheniya|Международные отношения">Международные отношения</option>
+						<option value="Menedzhment|Менеджмент">Менеджмент</option>
+						<option value="Mehanika|Механика">Механика</option>
+						<option value="Mikroekonomika|Микроэкономика">Микроэкономика</option>
+						<option value="MunicipalnoePravo|Муницепальное право">Муницепальное право</option>
+						<option value="Nalogi|Налоги">Налоги</option>
+						<option value="NemeckiyYazik|Немецкий язык">Немецкий язык</option>
+						<option value="OrganizaciyaTrudaIProizvodstvo|Организация труда и производство">Организация труда и производство</option>
+						<option value="OhranaPrirodi|Охрана природы">Охрана природы</option>
+						<option value="OhranaTruda|Охрана труда">Охрана труда</option>
+						<option value="Pedagogika|Педагогика">Педагогика</option>
+						<option value="Politologiya|Политология">Политология</option>
+					</select>
+					<script type="text/javascript">
+						$('#spec').multiSelect();
+					</script>
+					<br>
+					<input name="reg" type="submit" value="Зарегистрировать">
+				</div>
+			</div>
+		</form>
+<?php }else echo "<p class='success'>Вы успешно зарегистрировались</p>";?>
+	</div>

@@ -1,0 +1,152 @@
+
+<script type="text/javascript">
+
+function EditAutors(key)
+{
+	var str = "";
+	var autors = <?php echo json_encode($this->autors);?>;
+	$('#login_dform').attr('value',autors[key]['userLogin']);
+	$('#email_dform').attr('value',autors[key]['userEmail']);
+	$('#fio_dform').attr('value',autors[key]['userName']);
+	document.getElementById('address_dform').value=autors[key]['userAdress'];
+	$('#fio_dform').append(autors[key]['userName']);
+	for (var i in autors[key]['disciplins']) {
+	    if(autors[key]['disciplins'][i] && i!= "userID") str = str + "<li>"+autors[key]['disciplins'][i]+"</li>";
+	}
+	$('#qew').html("<ul>"+str+"</ul>")
+	/*допились статусы
+	var y=document.getElementById("status").options
+	y[3].selected = true;
+	*/
+}
+</script>
+<div id="wrap">
+	<div class="popupBg" onClick="userEditToggle()"></div>
+	<div id="uEditModal" class="modal">
+		<form action="<?php echo $this->url("/User/Index/main")?>" class="jClever" method="post">
+			<div class="field-block">
+				<h2 class="header">Данные аккаунта</h2>
+				<label>Логин</label><br>
+				<input id="login_dform" type="text" value=""><br>
+				<label>Email</label><br>
+				<input id="email_dform" type="text" value=""><br>
+				<label>Группа</label><br>
+				<select id="status" name="groupSelect">
+					<option id="activeopt" value="">Выберите статус клиента</option>
+					<option value="1">Суперадминистраторы</option>
+					<option value="value2">Администраторы</option>
+					<option value="2">Авторы</option>
+					<option value="value4">Клиенты</option>
+					<option value="value5">Менеджеры</option>
+					<option value="0">New</option>
+				</select>
+				<input name="editAutors" type="submit" value="Сохранить"><br>
+			</div>
+			<div class="field-block">
+				<h2 class="header">О пользователе</h2>
+				<label>Фамилия, имя, отчество</label><br>
+				<input id="fio_dform" type="text" value=""><br>
+				<label>Город</label><br>
+				<input type="text" value=""><br>
+				<label>Адрес</label><br>
+				<textarea id="address_dform" name="address" rows="5"></textarea>
+			</div>
+			<div class="clear"></div>
+			<div id="qew" class="field-block extended">
+
+			</div>
+		</form>
+	</div>
+		<div id="header">
+			<a href="<?php echo $this->url("/User/Index/main");?>" class="logo">Dipsverka</a>
+			<div class="user-menu">
+				<div class="cabinet">
+					<a href="#" class="man">Administrator</a>
+					<ul class="drop-menu">
+						<li><a href="<?php echo $this->url("/User/Index/Search");?>">Расширеный поиск</a></li>
+						<li><a href="<?php echo $this->url("/User/Index/orderlist");?>">Заказы</a></li>
+
+
+						<?php /*<li><a href="#">Very Long Text Of The Link</a></li>
+						<li><a href="#">Very Long Text Of The Link And Even More</a></li>*/?>
+
+
+					</ul>
+				</div>
+				<a href="" class="gear" title="Опции">Опции</a>
+				<a href="/User/Index/logout" class="lock" title="Выйти">Выйти</a>
+			</div>
+		</div>
+		<div id="main">
+			<div class="control-panel clearfix">
+				<a href="#" class="plus">Добавить<br></a>
+				<a href="#" class="minus">Удалить</a>
+				<a href="#" class="trash">Корзина</a>
+				<div class="search flr">
+					<form name="search" action="<?php echo $this->url("/User/Index/main")?>" method="GET">
+						<div>
+							<?php if(isset($this->searchActive)):?>
+								<a href="<?php echo $this->url("/User/Index/main");?>" class="del">Сбросить поиск</a>
+							<?php endif;?>
+							<input name="search" type="search" placeholder="Поиск...">
+							<input  type="submit" value="" id="search">
+						</div>
+					</form>
+				</div>
+			</div>
+			<form class="jClever">
+				<table class="users">
+					<thead>
+						<tr>
+							<th colspan="11">
+								Пользователи сайта
+							</th>
+						</tr>
+						<tr>
+							<th class="check">
+								<input type="checkbox" name="selectAll">
+							</th>
+							<th class="userid">UserID</th>
+							<th class="login">Логин</th>
+							<th class="name">ФИО</th>
+							<th class="ugroup">Группа</th>
+							<th class="regdate">Дата регистрации</th>
+							<th class="email">E-mail</th>
+							<th class="mobile">Мобильный</th>
+							<th class="icqno">ICQ</th>
+							<th class="skype">Skype</th>
+							<th class="uedit">&nbsp;</th>
+						</tr>
+					</thead>
+					<tfoot>
+						<tr>
+							<th colspan="11">
+								<input type="text" name="page" placeholder="1">
+							</th>
+						</tr>
+					</tfoot>
+					<tbody>
+						<?php foreach ($this->autors as $key=>$val):?>
+						<tr>
+							<td>
+								<input type="checkbox" name="check1">
+							</td>
+							<td><?php echo $val['userID']?></td>
+							<td><?php echo $val['userLogin']?></td>
+							<td><?php echo $val['userName']?></td>
+							<td><?php switch ($val['userStatus']) {case 1: echo "СУПЕРАДМИН"; break;case 0 : echo "Пользователь";}?></td>
+							<td><?php echo $val['userDataAdd']?></td>
+							<td><?php echo $val['userEmail']?></td>
+							<td><?php echo $val['userMobilePhone']?></td>
+							<td><?php echo $val['userIcq']?></td>
+							<td><?php echo $val['userSkype']?></td>
+							<td><span id="<?php echo $key;?>" class="edit" onClick="EditAutors(this.id);userEditToggle(true)"></span></td>
+						</tr>
+						<?php endforeach;?>
+
+					</tbody>
+				</table>
+			</form>
+		</div>
+		<div id="footer"></div>
+	</div>

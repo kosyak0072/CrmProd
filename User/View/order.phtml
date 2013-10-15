@@ -1,0 +1,54 @@
+<div id="wrap" class="reg">
+		<form  method="post" class="jClever">
+			<h1 class="header">Регистрация нового автора</h1>
+			<div class="wrap">
+				<?php if( !empty($this->error) ):?>
+					<p class="errormsg"><?php echo $this->error;?></p>
+				<?php endif;?>
+				<div class="reg-user">
+					<h2 class="header">Обязательные поля</h2>
+					<label>Тема работы<sup>*</sup></label><br>
+					<input name="orderName" type="text" placeholder="Введите тему вашей работы"><br>
+					<label>Предмет<sup>*</sup></label><br>
+					<input name="predmet" type="text" placeholder="Введите название предмета, по которому будет выполнена работа"><br>
+					<label>Тип работы<sup>*</sup></label><br>
+					<select name="predmetType">
+						<option value="0">Выберите тип работы</option>
+						<option value="17">Автореферат</option>
+						<option value="3">Дипломная работа</option>
+						<option value="20">Дипломная работа MBA</option>
+						<option value="6">Диссертация</option>
+						<option value="21">Доклад</option>
+						<option value="4">Контрольная работа</option>
+						<option value="2">Курсовая работа</option>
+						<option value="14">Магистерская работа</option>
+						<option value="16">Ответы на билеты</option>
+						<option value="13">Отчёт по практике</option>
+						<option value="19">Перевод</option>
+						<option value="22">Презентация</option>
+						<option value="5">Реферат</option>
+						<option value="15">Статьи к диссертации</option>
+						<option value="18">Эссе</option>
+					</select>
+					<label>Объем работы<sup>*</sup></label><br>
+					<input name="orderCount" type="Text" placeholder="Количество страниц в работе"><br>
+					<label>Количество источников<sup>*</sup></label><br>
+					<input name="listSource" type="text" placeholder="Количество источников, которое необходимо использовать в работе"><br>
+					<label>Срок выполнения<sup>*</sup></label><br>
+					<input name="orderDtEnd"type="text" placeholder="Дата, в которую вы хотите получить вашу работу"><br>
+				</div>
+				<div class="reg-user">
+					<h2 class="header">Контактная информация</h2>
+					<label>Фамилия, имя, отчество<sup>*</sup></label><br>
+					<input name="customerName" type="text" placeholder="Введите фамилию, имя и отчество"><br>
+					<label>Email<sup>*</sup></label><br>
+					<input name="customerEmail" type="text" placeholder="Введите ваш электронный почтовый ящик"><br>
+					<label>Номер мобильного телефона</label><br>
+					<input name="cutomerPhone" type="text" placeholder="Введите номер вашего мобильного телефона"><br>
+					<label>Дополнительные требования </label><br>
+					<textarea name="addInf" placeholder="Ваши комментарии и пожелания"></textarea>
+					<input name="order" type="submit" value="Оформить">
+				</div>
+			</div>
+		</form>
+	</div>
