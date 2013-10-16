@@ -153,10 +153,32 @@ class IndexController extends baseController
 	}
 
 	public function mainAction()
-	{
-		if(!empty($_POST['editAutors']))
+	{/*FIX ME prepare*/
+		if(!empty($_POST['axaj']) && !empty($_POST['action']) && $_POST['action'] == 'save')
+		{//D("UPDATE crmuser SET userName=".$this->pdo->quote($_POST['fio']).', userEmail='.$this->pdo->quote($_POST['email']).' ,userStatus='.$this->pdo->quote($_POST['groupSelect']).', userAdress='.$this->pdo->quote($_POST['address']).', userTown='.$this->pdo->quote($_POST['town'])." where userID=".$_POST['userID'],1);
+			$query = 'userName=?,
+		            userEmail=?,
+		            userStatus=?,
+					userAdress=?';
+			$params = array(
+					$_POST['fio'],
+					$_POST['email'],
+					$_POST['groupSelect'],
+					$_POST['address']
+			);
+			$where = "WHERE userID = ".$_POST['userID'];
+			$result = $this->pdo->exec("UPDATE crmuser SET userName=".$this->pdo->quote($_POST['fio']).', userEmail='.$this->pdo->quote($_POST['email']).' ,userStatus='.$this->pdo->quote($_POST['groupSelect']).', userAdress='.$this->pdo->quote($_POST['address'])." where userID=".$_POST['userID']);
+			//$this->pdo->prepare("UPDATE crmuser SET $query $where");
+			//$this->pdo->execute($params);
+			if($result) die('OK');
+			else die('ERROR');
+		}
+		else if (!empty($_POST['axaj']) && !empty($_POST['action']) && $_POST['action'] == 'delete')
 		{
-			D($_POST,1);
+			$where = "WHERE userID = ".$_POST['userID'];
+			$result = $this->pdo->exec("DELETE * FROM crmuser $where");
+			if($result) die('OK');
+			else die('ERROR');
 		}
 		if( isset($_GET['search']) )
 		{
@@ -233,6 +255,12 @@ class IndexController extends baseController
 	{
 		if( isset($_POST['order']) )
 		{
+			if( empty($_POST['site']) )
+			{
+				$this->error = "Неверная форма обратитесь к владельцу сервиса";
+			}
+			$_SESSION['site'] = $_POST['site'];
+
 			if( empty($_POST['orderName']) || empty($_POST['predmet']) || empty($_POST['predmetType']) || empty($_POST['orderCount']) || empty($_POST['listSource'])
 			|| empty($_POST['orderDtEnd']) || !isset($_POST['addInf']) || empty($_POST['customerName']) || empty($_POST['customerEmail']) || empty($_POST['cutomerPhone']) )
 			{
@@ -251,6 +279,7 @@ class IndexController extends baseController
 			{
 				$this->view->error = "Дата в неправильном формате";
 			}
+
 			$tmpTime = explode(".", $timeEnd[0]);
 			$day = $tmpTime[0];
 			$month = $tmpTime[1];
@@ -267,7 +296,9 @@ class IndexController extends baseController
 						orderAddInform,
 						customerName,
 						customerEmail,
-						customerPhone';
+						customerPhone,
+						orderGetSite,
+						orderStatus';
 				$params = array(
 						$_POST['orderName'],
 						$_POST['predmet'],
@@ -279,10 +310,15 @@ class IndexController extends baseController
 						$_POST['addInf'],
 						$_POST['customerName'],
 						$_POST['customerEmail'],
-						$_POST['cutomerPhone']
+						$_POST['cutomerPhone'],
+						$_POST['site'],
+						0
 				);
-				$insorder = $this->pdo->prepare("INSERT INTO crmOrder ($query) VALUE (?,?,?,?,?,?,?,?,?,?,?)");
-				$succes = $insorder->execute($params);
+				$insorder = $this->pdo->prepare("INSERT INTO crmOrder ($query) VALUE (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+				//$succes = $insorder->execute($params);
+				unset($_SESSION['site']);
+				@mkdir("files", 0777);
+				copy($_FILES['file']['tmp_name'], 'files/'.$_FILES['file']['name']);
 				if($succes)
 					$this->view->success = "Спасибо за заказ. В ближайшее время наш менеждер свяжится с вами.";
 			}

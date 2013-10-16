@@ -13,41 +13,71 @@ function EditAutors(key)
 	for (var i in autors[key]['disciplins']) {
 	    if(autors[key]['disciplins'][i] && i!= "userID") str = str + "<li>"+autors[key]['disciplins'][i]+"</li>";
 	}
+	$('#userID').attr('value',autors[key]['userID']);
 	$('#qew').html("<ul>"+str+"</ul>")
 	var y=document.getElementById("status").options
-	$(y[3]).attr('selected','selected');
+	if(autors[key]['userStatus'] == 2)
+		$(y[2]).attr('selected','selected');
+	else if(autors[key]['userStatus'] == 1)
+		$(y[0]).attr('selected','selected');
+	else if (autors[key]['userStatus'] == 0)
+		$(y[5]).attr('selected','selected');
+}
+function qwe(form,a)
+{
+	var data = "action="+a;
+	for(var i=0; i<form.length;i++){
+		var val = form [i].value;
+		var v = form [i].name;
+		data = data + "&"+v+"="+val;
+	}/*feexme orderID*/
+	$.ajax({
+        type: "POST",
+        url: 'http://crm.com/User/Index/main/',
+        data: "ajax=1"+data,
+        success: function(msg)
+        {
+        	if(msg == "OK")
+        		location.reload();
+        	else alert(msg)
+        },
+        error: function()
+        {
+        		alert(2)
+        }
+    });
 }
 </script>
 <div id="wrap">
 	<div class="popupBg" onClick="userEditToggle()"></div>
 	<div id="uEditModal" class="modal">
-		<form action="<?php echo $this->url("/User/Index/main")?>" class="jClever" method="post">
+		<form  class="jClever" method="post">
 			<div class="field-block">
 				<h2 class="header">Данные аккаунта</h2>
 				<label>Логин</label><br>
-				<input id="login_dform" type="text" value=""><br>
+				<input id="login_dform" type="text" name="login" value=""><br>
 				<label>Email</label><br>
-				<input id="email_dform" type="text" value=""><br>
+				<input id="email_dform" type="text" name="email" value=""><br>
 				<label>Группа</label><br>
 				<select id="status" name="groupSelect">
-					<option id="activeopt" value="">Выберите статус клиента</option>
 					<option value="1">Суперадминистраторы</option>
-					<option value="value2">Администраторы</option>
-					<option value="2" selected>Авторы</option>
+					<option value="2">Администраторы</option>
+					<option value="3">Авторы</option>
 					<option value="value4">Клиенты</option>
 					<option value="value5">Менеджеры</option>
 					<option value="0">New</option>
 				</select>
-				<input name="editAutors" type="submit" value="Сохранить"><br>
+
+				<input type="hidden" name="userID" id="userID">
+				<input name="editAutors" type="button" onclick="qwe(this.form,'save')" value="Сохранить"><br>
 			</div>
 			<div class="field-block">
 				<h2 class="header">О пользователе</h2>
 				<label>Фамилия, имя, отчество</label><br>
-				<input id="fio_dform" type="text" value=""><br>
-				<label>Город</label><br>
-				<input type="text" value=""><br>
+				<input id="fio_dform" type="text" name="fio" value=""><br>
 				<label>Адрес</label><br>
-				<textarea id="address_dform" name="address" rows="5"></textarea>
+				<textarea id="address_dform" name="address" rows="5"></textarea><br>
+				<input name="editAutors" type="button" onclick="qwe(this.form,'delete')" value="Удалить">
 			</div>
 			<div class="clear"></div>
 			<div id="qew" class="field-block extended">

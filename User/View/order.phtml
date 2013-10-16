@@ -1,5 +1,5 @@
 <div id="wrap" class="reg">
-		<form  method="post" class="jClever">
+		<form  method="post" class="jClever" enctype="multipart/form-data" >
 			<h1 class="header">Заказ работы</h1>
 			<div class="wrap">
 				<?php if( !empty($this->error) ):?>
@@ -42,7 +42,7 @@
 					    });
 					</script>
 					<label>Прикрепляемый файл</label><br>
-					<input name="orderDtEnd" type="file"><br>
+					<input name="file" type="file"><br>
 				</div>
 				<div class="reg-user">
 					<h2 class="header">Контактная информация</h2>
@@ -50,10 +50,15 @@
 					<input name="customerName" type="text" placeholder="Введите фамилию, имя и отчество"><br>
 					<label>Email<sup>*</sup></label><br>
 					<input name="customerEmail" type="text" placeholder="Введите ваш электронный почтовый ящик"><br>
-					<label>Номер мобильного телефона</label><br>
+					<label>Номер мобильного телефона<sup>*</sup></label><br>
 					<input name="cutomerPhone" type="text" placeholder="Введите номер вашего мобильного телефона"><br>
 					<label>Дополнительные требования </label><br>
 					<textarea name="addInf" placeholder="Ваши комментарии и пожелания" rows="14" class="cleararea"></textarea>
+					<?php if( isset($_SESSION['site']) ):?>
+						<input type="hidden" id="site" name="site" value="<?php echo $_SESSION['site']?>">
+					<?php else : ?>
+						<input type="hidden" id="site" name="site" value="http://www.diplomkin.com.ua/">
+					<?php endif?>
 					<input name="order" type="submit" value="Оформить">
 				</div>
 			</div>
