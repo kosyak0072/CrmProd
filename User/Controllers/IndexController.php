@@ -152,10 +152,23 @@ class IndexController extends baseController
 		View::getInstance()->render();
 	}
 
+	public function newUserAction()
+	{
+		$this->view->autors = $this->pdo->query("select * FROM crmuser WHERE userStatus=0")->fetchAll(PDO::FETCH_ASSOC);
+		foreach ($this->view->autors as &$val)
+		{
+			$val['disciplins'] = $this->pdo->query("select * FROM crmautorproffesion where userID = ".$val['userID'])->fetch(PDO::FETCH_ASSOC);
+		}
+		View::getInstance()->setTemplate("main", "User");
+		View::getInstance()->render();
+	}
+	
+
 	public function mainAction()
 	{/*FIX ME prepare*/
-		if(!empty($_POST['axaj']) && !empty($_POST['action']) && $_POST['action'] == 'save')
+		if(!empty($_POST['ajax']) && !empty($_POST['action']) && $_POST['action'] == 'save')
 		{//D("UPDATE crmuser SET userName=".$this->pdo->quote($_POST['fio']).', userEmail='.$this->pdo->quote($_POST['email']).' ,userStatus='.$this->pdo->quote($_POST['groupSelect']).', userAdress='.$this->pdo->quote($_POST['address']).', userTown='.$this->pdo->quote($_POST['town'])." where userID=".$_POST['userID'],1);
+
 			$query = 'userName=?,
 		            userEmail=?,
 		            userStatus=?,
@@ -173,7 +186,7 @@ class IndexController extends baseController
 			if($result) die('OK');
 			else die('ERROR');
 		}
-		else if (!empty($_POST['axaj']) && !empty($_POST['action']) && $_POST['action'] == 'delete')
+		else if (!empty($_POST['ajax']) && !empty($_POST['action']) && $_POST['action'] == 'delete')
 		{
 			$where = "WHERE userID = ".$_POST['userID'];
 			$result = $this->pdo->exec("DELETE * FROM crmuser $where");
@@ -315,7 +328,7 @@ class IndexController extends baseController
 						0
 				);
 				$insorder = $this->pdo->prepare("INSERT INTO crmOrder ($query) VALUE (?,?,?,?,?,?,?,?,?,?,?,?,?)");
-				//$succes = $insorder->execute($params);
+				$succes = $insorder->execute($params);
 				unset($_SESSION['site']);
 				@mkdir("files", 0777);
 				copy($_FILES['file']['tmp_name'], 'files/'.$_FILES['file']['name']);

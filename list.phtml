@@ -23,13 +23,57 @@
 	<script src="<?php echo JS_DIR?>jClever/src/jquery.jscrollpane.min.js" type="text/javascript"></script>
 	<script src="<?php echo JS_DIR?>jClever/src/jquery.mousewheel.js" type="text/javascript"></script>
 	<?php endif;?>
-	<script src="<?php echo JS_DIR?>mainjs.js" type="text/javascript"></script>
 	<script src="<?php echo JS_DIR?>jquery.multi-select.js" type="text/javascript"></script>
 	<script src="<?php echo JS_DIR?>mainjs.js" type="text/javascript"></script>
 
 <?php header('Content-type: text/html; charset=utf-8');?>
 </head>
 <body>
+	<?php if($this->_strTemplateFileName !="reg" && $this->_strTemplateFileName !="order" && $this->_strNameSpace == "User"):?>
+		<script type="text/javascript">
+      	$(document).ready(function(){  
+            show();  
+            //setInterval('show()',1000000000);  
+        });
+
+        function show()
+        {
+			$.ajax({
+		        type: "POST",
+		        url: 'http://crm.com/User/JS/getNewTaskUser',
+		        data: "ajax=1",
+		        success: function(msg)
+		        {
+		        	if(msg.substr(0,3) == "OK|")
+		        	{
+		        		var a = msg.split('|');
+		        		if(a[1] > 0 || a[2] > 0)
+		        		{
+		        			if(a[1] == 0)
+		        				$("#aNewUser").removeAttr('href');
+		        			if(a[2] == 0){
+		        				$("#aNewTask").removeAttr('href');}
+	        				$('#cabinet').addClass('statusnew');
+	        				$('#newUser').html('Новые пользователи ('+a[1]+')');
+	        				$('#cabinet').addClass('statusnew');
+	        				$('#newTask').html('Новые заказы ('+a[2]+')');
+	        			}
+	        			else
+	        			{
+
+	        				$('#cabinet').removeClass('statusnew');
+	        			}
+		        	}
+		        	else alert(msg)
+		        },
+		        error: function()
+		        {
+		        }
+
+		    });
+		}
+		</script>
+	<?php endif;?>
 	<?php require_once ($this->strTemplateFilePath);?>
 </body>
 </html>

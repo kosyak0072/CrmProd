@@ -21,12 +21,6 @@ require MODELS_DIR . DIRECTORY_SEPARATOR . 'Dispatcher.php';
 require CONTROLLERS_DIR . DIRECTORY_SEPARATOR . 'baseController.php';
 require CONTROLLERS_DIR . DIRECTORY_SEPARATOR . 'View.php';
 
-/*localhost
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'crm');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-*/
 define('DB_HOST', 'vipdip01.mysql.ukraine.com.ua');
 define('DB_NAME', 'vipdip01_sverka');
 define('DB_USER', 'vipdip01_sverka');

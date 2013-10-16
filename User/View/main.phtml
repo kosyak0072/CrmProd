@@ -25,7 +25,7 @@ function EditAutors(key)
 }
 function qwe(form,a)
 {
-	var data = "action="+a;
+	var data = "&action="+a;
 	for(var i=0; i<form.length;i++){
 		var val = form [i].value;
 		var v = form [i].name;
@@ -88,11 +88,11 @@ function qwe(form,a)
 		<div id="header">
 			<a href="<?php echo $this->url("/User/Index/main");?>" class="logo">Dipsverka</a>
 			<div class="user-menu">
-				<div class="cabinet statusnew">
+				<div id="cabinet" class="cabinet">
 					<a href="#" class="man">Administrator</a>
 					<ul class="drop-menu">
-						<li><a href="#">Новые пользователи (10)</a></li>
-						<li><a href="#">Новые заказы (3)</a></li>
+						<li><a id="aNewUser" href="<?php echo $this->url('/User/Index/newUser')?>"><span id="newUser"></span></a></li>
+						<li><a id="aNewTask" href="<?php echo $this->url('/User/Order/newOrder')?>"><span id="newTask"></span></a></li>
 						<li><a href="<?php echo $this->url("/User/Index/Search");?>">Расширеный поиск</a></li>
 						<li><a href="<?php echo $this->url("/User/Index/orderlist");?>">Заказы</a></li>
 					</ul>
@@ -159,7 +159,7 @@ function qwe(form,a)
 							<td><?php echo $val['userID']?></td>
 							<td><?php echo $val['userLogin']?></td>
 							<td><?php echo $val['userName']?></td>
-							<td><?php switch ($val['userStatus']) {case 1: echo "СУПЕРАДМИН"; break;case 0 : echo "Пользователь";}?></td>
+							<td><?php switch ($val['userStatus']) {case 1: echo "СУПЕРАДМИН"; break;case 0 : echo "Пользователь";break; case 3 : echo "Автор"; break;}?></td>
 							<td><?php echo $val['userDataAdd']?></td>
 							<td><?php echo $val['userEmail']?></td>
 							<td><?php echo $val['userMobilePhone']?></td>

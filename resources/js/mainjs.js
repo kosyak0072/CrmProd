@@ -15,8 +15,6 @@ $(document).ready(function() {
     	});
     });
 
-    $("div.field-block")
-
     $("#cancel").click(function(){
     	$("div.restore").fadeOut(function(){
     		$("div.auth").fadeIn();
