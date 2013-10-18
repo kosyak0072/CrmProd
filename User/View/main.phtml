@@ -16,7 +16,7 @@ function EditAutors(key)
 	$('#userID').attr('value',autors[key]['userID']);
 	$('#qew').html("<ul>"+str+"</ul>")
 	var y=document.getElementById("status").options
-	if(autors[key]['userStatus'] == 2)
+	if(autors[key]['userStatus'] == 3)
 		$(y[2]).attr('selected','selected');
 	else if(autors[key]['userStatus'] == 1)
 		$(y[0]).attr('selected','selected');
@@ -33,7 +33,7 @@ function qwe(form,a)
 	}/*feexme orderID*/
 	$.ajax({
         type: "POST",
-        url: 'http://crm.com/User/Index/main/',
+        url: 'http://dipsverka.com/User/Index/main/',
         data: "ajax=1"+data,
         success: function(msg)
         {

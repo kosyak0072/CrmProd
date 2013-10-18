@@ -183,13 +183,31 @@ class IndexController extends baseController
 			$result = $this->pdo->exec("UPDATE crmuser SET userName=".$this->pdo->quote($_POST['fio']).', userEmail='.$this->pdo->quote($_POST['email']).' ,userStatus='.$this->pdo->quote($_POST['groupSelect']).', userAdress='.$this->pdo->quote($_POST['address'])." where userID=".$_POST['userID']);
 			//$this->pdo->prepare("UPDATE crmuser SET $query $where");
 			//$this->pdo->execute($params);
-			if($result) die('OK');
+			if($result)
+			{
+				 if( $_POST['groupSelect'] == 3 )
+				 {
+				 	$to = $_POST['email'];
+					$from = "dipsverka@gmail.com";
+					$headers    = array
+				    (
+				        'Content-Type: text/html; charset="UTF-8";',
+				        'From: ' . $from,
+				        'Reply-To: ' . $from
+				    );
+				    $msg = "<html><body>";
+				    $msg .= "<p>Вы были приняты в ситему DipSverka.</p>";
+				    $msg .= "</html></body>";
+					mail($to, 'DipSverka', $msg, implode("\n", $headers));
+				 }
+				die('OK');
+			}
 			else die('ERROR');
 		}
 		else if (!empty($_POST['ajax']) && !empty($_POST['action']) && $_POST['action'] == 'delete')
 		{
 			$where = "WHERE userID = ".$_POST['userID'];
-			$result = $this->pdo->exec("DELETE * FROM crmuser $where");
+			$result = $this->pdo->exec("DELETE FROM crmuser $where");
 			if($result) die('OK');
 			else die('ERROR');
 		}
@@ -215,7 +233,7 @@ class IndexController extends baseController
 	}
 
 	public  function orderlistAction()
-	{
+	{error_reporting(E_ALL);
 		if( !empty($_GET['search']) )
 		{
 			if( is_numeric($_GET['search']) )
@@ -227,9 +245,9 @@ class IndexController extends baseController
 			View::getInstance()->render();
 			exit;
 		}
-		if( !empty($_POST['ajax']) && $_POST['ajax'] == 1 )
+		if( !empty($_POST['ajax']) && $_POST['ajax'] == 'edit')
 		{
-			$query = 'oderName=?,
+			$query = 'orderName=?,
 		            predmet=?,
 		            predmetType=?,
 		            orderCount=?,
@@ -253,7 +271,16 @@ class IndexController extends baseController
 			);
 			$where = "WHERE orderID =".$_POST['orderID'];
 			$updateOrder = $this->pdo->prepare("UPDATE crmOrder SET $query $where");
+			//$result = $this->pdo->exec("UPDATE crmOrder SET orderName='1' $where");
 			$result = $updateOrder->execute($params);
+			if($result)
+				die('OK');
+			else
+				die('Error');
+		}
+		else if( !empty($_POST['ajax']) && $_POST['ajax'] == 'delete' )
+		{
+			$result = $this->pdo->exec("DELETE FROM crmOrder WHERE orderID=".$_POST['orderID']);
 			if($result)
 				die('OK');
 			else
@@ -299,7 +326,7 @@ class IndexController extends baseController
 			$year = $tmpTime[2];
 			if( $day <= 31 && $month <= 12 && $year >= 2013 )
 			{
-				$query = 'oderName,
+				$query = 'orderName,
 			            predmet,
 			            predmetType,
 			            orderCount,
@@ -330,10 +357,27 @@ class IndexController extends baseController
 				$insorder = $this->pdo->prepare("INSERT INTO crmOrder ($query) VALUE (?,?,?,?,?,?,?,?,?,?,?,?,?)");
 				$succes = $insorder->execute($params);
 				unset($_SESSION['site']);
-				@mkdir("files", 0777);
-				copy($_FILES['file']['tmp_name'], 'files/'.$_FILES['file']['name']);
+				//@mkdir("files", 0777);
+				
 				if($succes)
+				{
+					$to = $_POST['customerEmail'];
+					$from = $_POST['site'] == 'http://www.diplomkin.com.ua/' ? "diplomkin@gmail.com" : ($_POST['site']== 'http://vipdiplom.kharkov.ua/' ? 'vipdiplom2011@gmail.com' : ( $_POST['site'] == 'http://www.alldp.com.ua/' ? "alldp.com.ua@gmail.com": "alldp.com.ua@gmail.com" ));
+
+					$headers    = array
+				    (
+				        'Content-Type: text/html; charset="UTF-8";',
+				        'From: ' . $from,
+				        'Reply-To: ' . $from
+				    );
+				    $msg = "<html><body>";
+				    $msg .= "<p>Ваша заявка была принята. В близжайшее время наш менеждер свяжится с вами.</p>";
+				    $msg .= "</html></body>";
+					mail($to, 'Заказ работы', $msg, implode("\n", $headers));
+					if( !empty($_FILES['file']['tmp_name']) )
+						copy($_FILES['file']['tmp_name'], 'files/'.$_FILES['file']['name']);
 					$this->view->success = "Спасибо за заказ. В ближайшее время наш менеждер свяжится с вами.";
+				}
 			}
 			else
 				$this->view->error = "Дата в неправильном формате";
