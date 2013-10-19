@@ -233,7 +233,7 @@ class IndexController extends baseController
 	}
 
 	public  function orderlistAction()
-	{error_reporting(E_ALL);
+	{
 		if( !empty($_GET['search']) )
 		{
 			if( is_numeric($_GET['search']) )
