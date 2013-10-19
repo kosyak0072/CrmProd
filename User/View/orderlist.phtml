@@ -64,20 +64,24 @@ if(m == 2)
 		<form action="" class="jClever" method="post">
 			<div class="field-block">
 				<h2 class="header">Данные заказа</h2>
-				<label>Тема работы</label><br>
-				<input name="orderName" id="orderName" type="text" value=""><br>
-				<label>Предмет</label><br>
-				<input name="orderPredmet" id="orderPredmet" type="text" value=""><br>
-				<label>Тип работы</label><br>
-				<input name="OrderType" id="OrderType" type="text" value=""><br>
-				<label>Объем работы</label><br>
-				<input name="orderCount" id="orderCount" type="text" value=""><br>
-				<label>Кол-во источиков</label><br>
-				<input name="orderListSource" id="orderListSource" type="text" value=""><br>
-				<label>Dead Line</label><br>
-				<input name="orderDtEnd" id="orderDtEnd" type="text" value=""><br>
-				<label>Источник заказа</label><br>
-				<input id="site" type="text" value=""><br>
+				<div>
+					<label>Тема работы</label><br>
+					<input name="orderName" id="orderName" type="text" value=""><br>
+					<label>Предмет</label><br>
+					<input name="orderPredmet" id="orderPredmet" type="text" value=""><br>
+					<label>Тип работы</label><br>
+					<input name="OrderType" id="OrderType" type="text" value=""><br>
+					<label>Объем работы</label><br>
+					<input name="orderCount" id="orderCount" type="text" value=""><br>
+					<label>Кол-во источиков</label><br>
+					<input name="orderListSource" id="orderListSource" type="text" value=""><br>
+				</div>
+				<div>
+					<label>Dead Line</label><br>
+					<input name="orderDtEnd" id="orderDtEnd" type="text" value=""><br>
+					<label>Источник заказа</label><br>
+					<input id="site" type="text" value=""><br>
+				</div>
 			</div>
 			<div class="field-block">
 				<h2 class="header">О заказчике</h2>
@@ -89,7 +93,7 @@ if(m == 2)
 				<input name="cutomerPhone" id="customerPhone" type="text" value=""><br>
 				<label>Доп. требования</label><br>
 				<!-- Fixme лажа с высотой -->
-				<textarea name="orderAddInform" id="orderAddInform" name="address" rows="16"></textarea>
+				<textarea name="orderAddInform" id="orderAddInform" name="address" rows="7"></textarea>
 				<input type="hidden" id="orderID" >
 			</div>
 			<div class="clear"></div>

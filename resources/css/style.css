@@ -573,6 +573,39 @@ table.users tfoot tr:first-child th {
 	padding: 2em;
 }
 
+/* Pagination */
+.pagination {text-align: center;}
+.pagination li {
+	display: inline-block;
+	vertical-align: top;
+}
+.pagination li a,
+.pagination li span {
+	font-size: 1.167em;
+	display: inline-block;
+	vertical-align: top;
+	background-color: #C4273C;
+	min-width: 2em;
+	line-height: 2em;
+	color: #FFF;
+	text-decoration: none;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+.pagination li.active span,
+.pagination li a:hover {
+	background-color: #fff;
+	color: #3f3f3f;
+}
+.pagination li.step a,
+.pagination li.step span {
+	background: none;
+	margin: 0 1em;
+	color: #FFF;
+}
+.pagination li.step span {color: #aaa;}
+.pagination li.step a:hover {text-decoration: underline;}
 
 /* PopUps & Modals */
 div.popupBg {
@@ -606,10 +639,16 @@ div.modal {
 }
 div.field-block {
 	float: left;
-	width: 22em;
+	min-width: 22em;
 	padding-left: 2em;
 	border-left: 1px dashed rgba(255,255,255,0.4);
 }
+div.field-block > div {
+	float: left;
+	width: 22em;
+	padding-right: 2em;
+}
+div.field-block > div:last-child {padding: 0;}
 div.field-block.extended {
 	float: none;
 	width: 100%;

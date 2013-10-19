@@ -146,7 +146,35 @@ function qwe(form,a)
 					<tfoot>
 						<tr>
 							<th colspan="11">
-								<input type="text" name="page" placeholder="1">
+								<ul class="pagination">
+									<!-- 
+
+
+
+
+
+										ЭТО ПИЗДЕЦКАКОЙ ВАЖНЫЙ КОММЕНТАРИЙ! НЕ ПРОЕБИ ЕГО!!!!
+
+
+
+
+
+									-->
+									<!-- В случае, если страница первая или последняя вместо ссылки можно использовать чистый span -->
+									<li class="step"><span>Пред.</span></li>
+									<!-- В остальных случаях - это ссылка! ССЫЛКА СО СТРЕЛКОЙ ИДЕТ! ЭТО ВАЖНО! А СПАН - БЕЗ! -->
+									<!-- <li class="step"><a href="#">&larr; Пред.</a></li> -->
+									<!-- А тут активный класс для текущей страницы!!!! -->
+									<li class="active"><span>2</span></li>
+									<li><a href="#">3</a></li>
+									<li><a href="#">4</a></li>
+									<li><a href="#">5</a></li>
+									<li><a href="#">6</a></li>
+									<li><a href="#">7</a></li>
+									<li><a href="#">8</a></li>
+									<li><a href="#">9</a></li>
+									<li class="step"><a href="#">След. &rarr;</a></li>
+								</ul>
 							</th>
 						</tr>
 					</tfoot>
