@@ -39,7 +39,7 @@ class View
 
 	public function url($url)
 	{
-		return $url;
+		return DOMAIN . $url;
 	}
 	protected static $_objInstance = NULL;
 	/**

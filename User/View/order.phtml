@@ -4,13 +4,15 @@
 			<div class="wrap">
 				<?php if( !empty($this->error) ):?>
 					<p class="errormsg"><?php echo $this->error;?></p>
+				<?php elseif ( !empty($this->success) ):?>
+					<p class="errormsg success"><?php echo $this->success;?></p>
 				<?php endif;?>
 				<div class="reg-user">
 					<h2 class="header">Обязательные поля</h2>
 					<label>Тема работы<sup>*</sup></label><br>
 					<input name="orderName" type="text" placeholder="Введите тему вашей работы"><br>
 					<label>Предмет<sup>*</sup></label><br>
-					<select name="" id="">
+					<select name="predmet" id="">
 						<option value="APP|Автоматизация производственных процессов (АПП)">Автоматизация производственных процессов (АПП)</option>
 						<option value="Anatomiya|Анатомия">Анатомия</option>
 						<option value="AngliyskiyYazik|Английский язык">Английский язык</option>
@@ -147,7 +149,7 @@
 						<option value="0">Выберите тип работы</option>
 						<option value="Автореферат">Автореферат</option>
 						<option value="Дипломная работа">Дипломная работа</option>
-						<option value="Дипломная работа MBA<">Дипломная работа MBA</option>
+						<option value="Дипломная работа MBA">Дипломная работа MBA</option>
 						<option value="Диссертация">Диссертация</option>
 						<option value="Доклад">Доклад</option>
 						<option value="Контрольная работа">Контрольная работа</option>
@@ -184,7 +186,7 @@
 					<label>Номер мобильного телефона<sup>*</sup></label><br>
 					<input name="cutomerPhone" type="text" placeholder="Введите номер вашего мобильного телефона"><br>
 					<label>Предполагаемый бюджет<sup>*</sup></label><br>
-					<input name="" type="text" placeholder="Введите предполагаемую сумму, которую вы хотите потратить на заказ"><br>
+					<input name="budget" type="text" placeholder="Введите предполагаемую сумму, которую вы хотите потратить на заказ"><br>
 					<label>Дополнительные требования </label><br>
 					<textarea name="addInf" placeholder="Ваши комментарии и пожелания" rows="11" class="cleararea"></textarea>
 					<?php if( isset($_SESSION['site']) ):?>

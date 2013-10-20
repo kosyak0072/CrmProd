@@ -224,7 +224,17 @@ class IndexController extends baseController
 			exit ;
 		}
 		if( empty($_SESSION['user']) ) header("Location: http://dipsverka.com/User/Index/Name");
-		$this->view->autors = $this->pdo->query("select * FROM crmuser")->fetchAll(PDO::FETCH_ASSOC);
+		$limit = "";
+		if( !empty($_GET['page']) )
+		{
+			$qnt = 2;
+			$min = 0 + (($_GET['page']-1)*$qnt);
+			$limit = "LIMIT $min, $qnt"; 
+		}
+		$maxPage = $this->pdo->query("SELECT count(*) AS count FROM crmuser")->fetch(PDO::FETCH_ASSOC);
+		$this->view->pages['maxPages'] = $maxPage['count'] % $qnt == 0 ? $maxPage['count']/$qnt : $maxPage['count']/$qnt +1 ;
+		$this->view->pages['page'] = !empty($_GET['page']) ? (int)$_GET['page'] : (int)1;
+		$this->view->autors = $this->pdo->query("select * FROM crmuser $limit")->fetchAll(PDO::FETCH_ASSOC);
 		foreach ($this->view->autors as &$val)
 		{
 			$val['disciplins'] = $this->pdo->query("select * FROM crmautorproffesion where userID = ".$val['userID'])->fetch(PDO::FETCH_ASSOC);
@@ -256,7 +266,9 @@ class IndexController extends baseController
 					orderAddInform=?,
 					customerName=?,
 					customerEmail=?,
-					customerPhone=?';
+					customerPhone=?,
+					orderStatus=?,
+					orderButget=?';
 			$params = array(
 					$_POST['orderName'],
 					$_POST['orderPredmet'],
@@ -267,11 +279,12 @@ class IndexController extends baseController
 					$_POST['orderAddInform'],
 					$_POST['customerName'],
 					$_POST['customerEmail'],
-					$_POST['cutomerPhone']
+					$_POST['cutomerPhone'],
+					1,
+					$_POST['orderButget']
 			);
 			$where = "WHERE orderID =".$_POST['orderID'];
 			$updateOrder = $this->pdo->prepare("UPDATE crmOrder SET $query $where");
-			//$result = $this->pdo->exec("UPDATE crmOrder SET orderName='1' $where");
 			$result = $updateOrder->execute($params);
 			if($result)
 				die('OK');
@@ -318,8 +331,27 @@ class IndexController extends baseController
 			if( empty($timeEnd[0]) )
 			{
 				$this->view->error = "Дата в неправильном формате";
+				View::getInstance()->render();
+				return ;
 			}
-
+			$predmet = substr($_POST['predmet'], strripos($_POST['predmet'], "|")+1);
+			if(empty($predmet))
+			{
+				$this->view->error = "не верное заполнение предмета. свяжитесь с администратором";
+				View::getInstance()->render();
+				return ;
+			}
+			if( !empty($_FILES['file']['tmp_name']) )
+			{
+				$tmp = explode(".", $_FILES['file']['name']);
+				$tmpCount = count($tmp);
+				if( $tmp[$tmpCount-1] != "rar" && $tmp[$tmpCount-1] != "zip" )
+				{
+					$this->view->error = "Файл должен быть в формате .rar или .zip";
+					View::getInstance()->render();
+					return ;
+				}
+			}
 			$tmpTime = explode(".", $timeEnd[0]);
 			$day = $tmpTime[0];
 			$month = $tmpTime[1];
@@ -338,10 +370,11 @@ class IndexController extends baseController
 						customerEmail,
 						customerPhone,
 						orderGetSite,
+						orderButget,
 						orderStatus';
 				$params = array(
 						$_POST['orderName'],
-						$_POST['predmet'],
+						$predmet,
 						$_POST['predmetType'],
 						$_POST['orderCount'],
 						$_POST['listSource'],
@@ -352,13 +385,14 @@ class IndexController extends baseController
 						$_POST['customerEmail'],
 						$_POST['cutomerPhone'],
 						$_POST['site'],
+						$_POST['budget'],
 						0
 				);
-				$insorder = $this->pdo->prepare("INSERT INTO crmOrder ($query) VALUE (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+				$insorder = $this->pdo->prepare("INSERT INTO crmOrder ($query) VALUE (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 				$succes = $insorder->execute($params);
 				unset($_SESSION['site']);
 				//@mkdir("files", 0777);
-				
+				$succes= 1;
 				if($succes)
 				{
 					$to = $_POST['customerEmail'];
@@ -375,7 +409,11 @@ class IndexController extends baseController
 				    $msg .= "</html></body>";
 					mail($to, 'Заказ работы', $msg, implode("\n", $headers));
 					if( !empty($_FILES['file']['tmp_name']) )
-						copy($_FILES['file']['tmp_name'], 'files/'.$_FILES['file']['name']);
+					{
+							$this->pdo->exec("UPDATE crmOrder SET orderFile = {$this->pdo->quote($_FILES['file']['name'])} WHERE orderID = ".$this->pdo->lastInsertId());
+							copy($_FILES['file']['tmp_name'], 'files/'.$_FILES['file']['name']);
+					}
+					
 					$this->view->success = "Спасибо за заказ. В ближайшее время наш менеждер свяжится с вами.";
 				}
 			}

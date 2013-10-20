@@ -40,7 +40,7 @@
         {
 			$.ajax({
 		        type: "POST",
-		        url: 'http://dipsverka.com/User/JS/getNewTaskUser',
+		        url: '<?php echo $this->url("/User/JS/getNewTaskUser")?>',
 		        data: "ajax=1",
 		        success: function(msg)
 		        {
