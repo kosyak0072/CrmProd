@@ -15,6 +15,9 @@ function ShowOrder(id)
 	$('#customerName').attr('value',order[id]['customerName']);
 	$('#orderID').attr('value',order[id]['orderID']);
 	$('#site').attr('value',order[id]['orderGetSite'])
+	$('#orderButget').attr('value',order[id]['orderButget']);
+
+	$('#orderFile').attr('value',"<?php echo $this->url("/files/")?>" + order[id]['orderFile']);
 }
 
 function EditOrder(id,form,m)
@@ -29,7 +32,7 @@ function EditOrder(id,form,m)
 	if(m == 1)
 	$.ajax({ 
         type: "POST",
-        url: 'http://dipsverka.com/User/Index/orderlist/',
+        url: '<?php echo $this->url("/User/Index/orderlist/")?>',
         data: "ajax=edit&orderID="+orderID+data,
         success: function(msg)
         {
@@ -44,7 +47,7 @@ function EditOrder(id,form,m)
 if(m == 2)
 	$.ajax({ 
         type: "POST",
-        url: 'http://dipsverka.com/User/Index/orderlist/',
+        url: '<?php echo $this->url("/User/Index/orderlist/")?>',
         data: "ajax=delete&orderID="+orderID+data,
         success: function(msg)
         {
@@ -81,6 +84,10 @@ if(m == 2)
 					<input name="orderDtEnd" id="orderDtEnd" type="text" value=""><br>
 					<label>Источник заказа</label><br>
 					<input id="site" type="text" value=""><br>
+					<label>Предпологаемый бюджет</label><br>
+					<input name="orderButget" id="orderButget" type="text" value=""><br>
+					<label>Ссылка на скачивание прикрепленного файла</label><br>
+					<input name="orderFile" id="orderFile" type="text" value=""><br>
 				</div>
 			</div>
 			<div class="field-block">

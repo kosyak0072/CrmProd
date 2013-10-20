@@ -10,7 +10,7 @@ define('CSS_DIR',  '/resources/css/');
 define('JS_DIR', '/resources/js/');
 define('IMG_DIR', '/resources/img/');
 
-
+define('DOMAIN', 'http://crm.com');
 
 /* Load Models */
 require MODELS_DIR . DIRECTORY_SEPARATOR . 'Customer.php';
